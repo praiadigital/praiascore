@@ -1,35 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PraiaScore — Score de Imóveis do Litoral</title>
-<meta name="description" content="Descubra o score 0–1000 de qualquer imóvel do litoral paulista em segundos.">
-<style>body{font-family:system-ui;margin:0;background:#f0f9ff;color:#0c4a6e}header{background:linear-gradient(135deg,#0369a1,#0ea5e9);color:#fff;padding:2rem 1rem;text-align:center}header a{color:#bae6fd}main{max-width:720px;margin:1.5rem auto;padding:0 1rem}.card{background:#fff;border-radius:12px;padding:1.2rem;margin:1rem 0;box-shadow:0 2px 8px rgba(2,132,199,.15)}button,select,input{font-size:1rem;padding:.55rem;border-radius:8px;border:1px solid #7dd3fc;margin:.25rem 0;width:100%;box-sizing:border-box}button{background:#0284c7;color:#fff;border:0;cursor:pointer;font-weight:600}label{font-size:.9rem;font-weight:600}.score{font-size:3.5rem;font-weight:800;text-align:center}.bar{height:14px;background:#e0f2fe;border-radius:999px;overflow:hidden}.bar>div{height:100%;background:linear-gradient(90deg,#f43f5e,#fbbf24,#22c55e)}footer{text-align:center;font-size:.85rem;padding:2rem 1rem;color:#0369a1}.net{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:.8rem}.net a{background:#e0f2fe;color:#075985;padding:.3rem .6rem;border-radius:999px;text-decoration:none;font-size:.8rem}</style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PraiaScore — Score de 0 a 1000 para imóveis do litoral | Praia Digital</title>
+<meta name="description" content="Calcule o PraiaScore de qualquer imóvel do litoral paulista em segundos. Nota de 0 a 1000 baseada em localização, preço/m², potencial de temporada e liquidez.">
+<link rel="canonical" href="https://praia.digital/praiascore/">
+<style>:root{--azul:#0a2540;--mar:#0e7490;--areia:#f8f5ef;--sol:#f59e0b}*{margin:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}body{background:var(--areia);color:#1e293b}header{background:linear-gradient(135deg,var(--azul),var(--mar));color:#fff;padding:2.5rem 1.5rem;text-align:center}header h1{font-size:2.2rem}header p{opacity:.9;margin-top:.5rem}.badge{display:inline-block;background:rgba(255,255,255,.15);padding:.25rem .8rem;border-radius:999px;font-size:.8rem;margin-bottom:.8rem}main{max-width:720px;margin:2rem auto;padding:0 1.25rem}.card{background:#fff;border-radius:1rem;padding:1.75rem;box-shadow:0 4px 24px rgba(10,37,64,.08);margin-bottom:1.5rem}label{display:block;font-weight:600;margin:1rem 0 .35rem}input,select{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:.5rem;font-size:1rem}button{width:100%;margin-top:1.4rem;background:var(--mar);color:#fff;border:0;padding:.9rem;font-size:1.05rem;font-weight:700;border-radius:.6rem;cursor:pointer}button:hover{background:#155e75}#resultado{display:none;text-align:center}.score{font-size:4rem;font-weight:800}.faixa{font-weight:600;margin:.4rem 0}.barra{height:12px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin:.8rem 0}.barra div{height:100%;border-radius:999px;transition:width .8s}.rede{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.75rem}.rede a{background:#fff;border:1px solid #e2e8f0;border-radius:.6rem;padding:.8rem;text-decoration:none;color:var(--azul);font-weight:600;font-size:.9rem}.rede a:hover{border-color:var(--mar)}footer{text-align:center;padding:2rem;color:#64748b;font-size:.85rem}footer a{color:var(--mar)}</style>
 </head>
 <body>
-<header><h1>🏖️ PraiaScore</h1><p>O "score de crédito" dos imóveis do litoral: nota de 0 a 1000 em segundos.</p><a href="https://praia.digital">← praia.digital</a> · <a href="https://praia.digital/apps">Hub de apps</a></header>
+<header><span class="badge">🛰️ App satélite de <a href="https://praia.digital" style="color:#fff">praia.digital</a></span><h1>🏆 PraiaScore</h1><p>O score definitivo (0–1000) de qualquer imóvel do litoral paulista</p></header>
 <main>
 <div class="card">
-<label>Cidade</label><select id="cidade"><option value="95">Guarujá</option><option value="90">Santos</option><option value="88">São Sebastião</option><option value="85">Praia Grande</option><option value="82">Ubatuba</option><option value="80">Bertioga</option><option value="75">Mongaguá</option><option value="72">Peruíbe</option></select>
-<label>Distância da praia</label><select id="dist"><option value="100">Frente mar</option><option value="88">Até 100 m</option><option value="72">Até 500 m</option><option value="55">Até 1 km</option><option value="35">Mais de 1 km</option></select>
-<label>Idade do imóvel</label><select id="idade"><option value="100">Novo / na planta</option><option value="85">Até 10 anos</option><option value="65">10–25 anos</option><option value="45">Mais de 25 anos</option></select>
-<label>Infraestrutura do condomínio/prédio</label><select id="infra"><option value="100">Completa (piscina, lazer, portaria 24h)</option><option value="75">Boa (portaria + lazer parcial)</option><option value="50">Básica</option><option value="30">Casa sem condomínio</option></select>
-<label>Mobília / pronto para temporada</label><select id="mob"><option value="100">Mobiliado completo</option><option value="70">Semi-mobiliado</option><option value="40">Sem mobília</option></select>
-<button onclick="calc()">Calcular PraiaScore</button>
+<label>Cidade</label><select id="cidade"><option value="9">Guarujá</option><option value="8.5">Santos</option><option value="9.5">Balneário Camboriú (ref.)</option><option value="8">São Sebastião</option><option value="7.5">Ubatuba</option><option value="7">Caraguatatuba</option><option value="8.5">Riviera de São Lourenço</option><option value="6.5">Mongaguá</option><option value="6">Itanhaém</option><option value="7">Peruíbe</option></select>
+<label>Distância da praia</label><select id="praia"><option value="10">Frente ao mar</option><option value="8.5">Até 200 m</option><option value="7">Até 500 m</option><option value="5">Até 1 km</option><option value="3">Mais de 1 km</option></select>
+<label>Preço por m² (R$)</label><input id="m2" type="number" value="8500" min="1000">
+<label>Quartos</label><select id="quartos"><option value="6">Studio / 1</option><option value="8">2</option><option value="9">3</option><option value="10">4+</option></select>
+<label>Estado de conservação</label><select id="estado"><option value="10">Novo / reformado</option><option value="8">Bom</option><option value="5">Precisa de reforma leve</option><option value="2">Reforma pesada</option></select>
+<button onclick="calcular()">Calcular PraiaScore</button>
 </div>
-<div class="card" id="res" style="display:none"><div class="score" id="sc">0</div><div class="bar"><div id="bf" style="width:0"></div></div><p id="msg" style="text-align:center"></p></div>
-<div class="card"><h3>Continue explorando</h3><p>🎯 <a href="https://praia.digital/match-praia">Match Praia — ache o imóvel ideal</a><br>📊 <a href="https://praia.digital/radar-precos">Radar de Preços — R$/m² por bairro</a><br>🗺️ <a href="https://praia.digital/mapa-investidor">Mapa do Investidor — score por cidade</a></p></div>
+<div class="card" id="resultado"><div class="score" id="nota">—</div><div class="barra"><div id="fill"></div></div><div class="faixa" id="faixa"></div><p id="detalhe" style="margin-top:.6rem;color:#475569"></p>
+<p style="margin-top:1rem;font-size:.9rem">Simule o rendimento deste imóvel na <a href="https://praia.digital/simulador-roi">Calculadora de ROI</a> e veja a diária ideal no <a href="https://praia.digital/preco-justo">Preço Justo</a>.</p></div>
+<h2 style="margin:1.5rem 0 .8rem">🌐 Rede Praia Digital</h2>
+<div class="rede">
+<a href="https://praia.digital">🏠 Portal Praia Digital</a>
+<a href="https://praia.digital/radar-precos">📊 Radar de Preços</a>
+<a href="https://praia.digital/mapa-investidor">🗺️ Mapa do Investidor</a>
+<a href="https://praia.digital/calculadora-custos">🧾 Calculadora de Custos</a>
+<a href="https://praia.digital/match-praia">💘 Match Praia</a>
+<a href="https://praia.digital/apps">🛰️ Todos os apps</a>
+</div>
 </main>
-<footer><b>Rede Praia Digital</b><div class="net"><a href="https://praia.digital/apps">Hub</a><a href="https://praia.digital/ondata">Ondata</a><a href="https://praia.digital/vizinho-digital">Vizinho Digital</a><a href="https://praia.digital/temporada-pro">Temporada Pro</a><a href="https://praia.digital/marea">Maréa</a><a href="https://praia.digital/concierge-ia">Concierge IA</a><a href="https://praia.digital/tour-360">Tour 360</a><a href="https://praia.digital/plano-litoral">Plano Litoral</a><a href="https://praia.digital/checklist-anfitriao">Checklist Anfitrião</a></div><p>© 2026 Praia Digital — tecnologia para o mercado imobiliário do litoral</p></footer>
+<footer>Feito com 🌊 pela rede <a href="https://praia.digital">Praia Digital</a> · <a href="https://github.com/praiadigital/praiascore">código aberto no GitHub</a></footer>
 <script>
-function calc(){
- const v=id=>+document.getElementById(id).value;
- const s=Math.round((v('cidade')*0.28+v('dist')*0.30+v('idade')*0.14+v('infra')*0.16+v('mob')*0.12)*10);
- document.getElementById('res').style.display='block';
- document.getElementById('sc').textContent=s;
- document.getElementById('bf').style.width=(s/10)+'%';
- document.getElementById('msg').textContent=s>=850?'💎 Excepcional — top 5% do litoral':s>=700?'🔥 Excelente oportunidade':s>=550?'👍 Bom imóvel, avalie o preço':s>=400?'⚠️ Abaixo da média — negocie bastante':'🚩 Score baixo — investigue antes de ofertar';
+function calcular(){
+const c=+document.getElementById('cidade').value,p=+document.getElementById('praia').value,m2=+document.getElementById('m2').value||8000,q=+document.getElementById('quartos').value,e=+document.getElementById('estado').value;
+const preco=Math.max(1,Math.min(10,11-(m2-3000)/1500));
+const score=Math.round((c*.22+p*.26+preco*.18+q*.12+e*.22)/10*1000);
+document.getElementById('resultado').style.display='block';
+document.getElementById('nota').textContent=score;
+const cor=score>=800?'#16a34a':score>=650?'#0e7490':score>=450?'#f59e0b':'#dc2626';
+document.getElementById('nota').style.color=cor;
+document.getElementById('fill').style.cssText=`width:${score/10}%;background:${cor}`;
+const faixa=score>=800?'💎 Excepcional — oportunidade rara':score>=650?'✅ Ótimo — compra recomendada':score>=450?'⚖️ Razoável — negocie o preço':'⚠️ Atenção — avalie com cuidado';
+document.getElementById('faixa').textContent=faixa;
+document.getElementById('detalhe').textContent=`Localização pesa 48% da nota. Preço de R$ ${m2.toLocaleString('pt-BR')}/m² ${preco>=7?'está abaixo da média da região ✅':'está acima da média — tente negociar 💬'}.`;
 }
 </script>
-</body>
-</html>
+</body></html>
