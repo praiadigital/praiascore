@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PraiaScore — Score de Imóveis do Litoral</title>
+<meta name="description" content="Descubra o score 0–1000 de qualquer imóvel do litoral paulista em segundos.">
+<style>body{font-family:system-ui;margin:0;background:#f0f9ff;color:#0c4a6e}header{background:linear-gradient(135deg,#0369a1,#0ea5e9);color:#fff;padding:2rem 1rem;text-align:center}header a{color:#bae6fd}main{max-width:720px;margin:1.5rem auto;padding:0 1rem}.card{background:#fff;border-radius:12px;padding:1.2rem;margin:1rem 0;box-shadow:0 2px 8px rgba(2,132,199,.15)}button,select,input{font-size:1rem;padding:.55rem;border-radius:8px;border:1px solid #7dd3fc;margin:.25rem 0;width:100%;box-sizing:border-box}button{background:#0284c7;color:#fff;border:0;cursor:pointer;font-weight:600}label{font-size:.9rem;font-weight:600}.score{font-size:3.5rem;font-weight:800;text-align:center}.bar{height:14px;background:#e0f2fe;border-radius:999px;overflow:hidden}.bar>div{height:100%;background:linear-gradient(90deg,#f43f5e,#fbbf24,#22c55e)}footer{text-align:center;font-size:.85rem;padding:2rem 1rem;color:#0369a1}.net{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:.8rem}.net a{background:#e0f2fe;color:#075985;padding:.3rem .6rem;border-radius:999px;text-decoration:none;font-size:.8rem}</style>
+</head>
+<body>
+<header><h1>🏖️ PraiaScore</h1><p>O "score de crédito" dos imóveis do litoral: nota de 0 a 1000 em segundos.</p><a href="https://praia.digital">← praia.digital</a> · <a href="https://praia.digital/apps">Hub de apps</a></header>
+<main>
+<div class="card">
+<label>Cidade</label><select id="cidade"><option value="95">Guarujá</option><option value="90">Santos</option><option value="88">São Sebastião</option><option value="85">Praia Grande</option><option value="82">Ubatuba</option><option value="80">Bertioga</option><option value="75">Mongaguá</option><option value="72">Peruíbe</option></select>
+<label>Distância da praia</label><select id="dist"><option value="100">Frente mar</option><option value="88">Até 100 m</option><option value="72">Até 500 m</option><option value="55">Até 1 km</option><option value="35">Mais de 1 km</option></select>
+<label>Idade do imóvel</label><select id="idade"><option value="100">Novo / na planta</option><option value="85">Até 10 anos</option><option value="65">10–25 anos</option><option value="45">Mais de 25 anos</option></select>
+<label>Infraestrutura do condomínio/prédio</label><select id="infra"><option value="100">Completa (piscina, lazer, portaria 24h)</option><option value="75">Boa (portaria + lazer parcial)</option><option value="50">Básica</option><option value="30">Casa sem condomínio</option></select>
+<label>Mobília / pronto para temporada</label><select id="mob"><option value="100">Mobiliado completo</option><option value="70">Semi-mobiliado</option><option value="40">Sem mobília</option></select>
+<button onclick="calc()">Calcular PraiaScore</button>
+</div>
+<div class="card" id="res" style="display:none"><div class="score" id="sc">0</div><div class="bar"><div id="bf" style="width:0"></div></div><p id="msg" style="text-align:center"></p></div>
+<div class="card"><h3>Continue explorando</h3><p>🎯 <a href="https://praia.digital/match-praia">Match Praia — ache o imóvel ideal</a><br>📊 <a href="https://praia.digital/radar-precos">Radar de Preços — R$/m² por bairro</a><br>🗺️ <a href="https://praia.digital/mapa-investidor">Mapa do Investidor — score por cidade</a></p></div>
+</main>
+<footer><b>Rede Praia Digital</b><div class="net"><a href="https://praia.digital/apps">Hub</a><a href="https://praia.digital/ondata">Ondata</a><a href="https://praia.digital/vizinho-digital">Vizinho Digital</a><a href="https://praia.digital/temporada-pro">Temporada Pro</a><a href="https://praia.digital/marea">Maréa</a><a href="https://praia.digital/concierge-ia">Concierge IA</a><a href="https://praia.digital/tour-360">Tour 360</a><a href="https://praia.digital/plano-litoral">Plano Litoral</a><a href="https://praia.digital/checklist-anfitriao">Checklist Anfitrião</a></div><p>© 2026 Praia Digital — tecnologia para o mercado imobiliário do litoral</p></footer>
+<script>
+function calc(){
+ const v=id=>+document.getElementById(id).value;
+ const s=Math.round((v('cidade')*0.28+v('dist')*0.30+v('idade')*0.14+v('infra')*0.16+v('mob')*0.12)*10);
+ document.getElementById('res').style.display='block';
+ document.getElementById('sc').textContent=s;
+ document.getElementById('bf').style.width=(s/10)+'%';
+ document.getElementById('msg').textContent=s>=850?'💎 Excepcional — top 5% do litoral':s>=700?'🔥 Excelente oportunidade':s>=550?'👍 Bom imóvel, avalie o preço':s>=400?'⚠️ Abaixo da média — negocie bastante':'🚩 Score baixo — investigue antes de ofertar';
+}
+</script>
+</body>
+</html>
